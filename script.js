@@ -285,26 +285,7 @@ if (playWishBtn && wishAudio) {
   });
 }
 
-// 4. Memory Map Logic
-const mapPins = document.querySelectorAll('.map-pin');
-const mapModal = document.getElementById('map-modal');
-const modalTitle = document.getElementById('modal-title');
-const modalDesc = document.getElementById('modal-desc');
-const closeModal = document.getElementById('close-modal');
 
-mapPins.forEach(pin => {
-  pin.addEventListener('click', () => {
-    modalTitle.textContent = pin.getAttribute('data-title');
-    modalDesc.textContent = pin.getAttribute('data-desc');
-    mapModal.classList.remove('hidden');
-  });
-});
-
-if (closeModal) {
-  closeModal.addEventListener('click', () => {
-    mapModal.classList.add('hidden');
-  });
-}
 
 // 5. Coupon Logic (with Confetti)
 const coupons = document.querySelectorAll('.coupon');
