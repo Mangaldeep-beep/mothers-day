@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Mother's Day!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Import maps polyfill -->
+  <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+  
+  <!-- Import map for Three.js -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  
+  <div class="content">
+    <section class="hero">
+      <h1 class="title">Happy Mother's Day</h1>
+      <p class="subtitle">To the most amazing mom in the world</p>
+      <div class="scroll-indicator">
+        <span>Scroll to explore</span>
+        <div class="mouse"></div>
+      </div>
+    </section>
+
+    <section class="memory-section" id="memory-1">
+      <div class="text-block right">
+        <h2>Unconditional Love</h2>
+        <p>Thank you for always being there for me, through thick and thin.</p>
+      </div>
+    </section>
+
+    <section class="memory-section" id="memory-2">
+      <div class="text-block left">
+        <h2>Endless Support</h2>
+        <p>Your guidance and wisdom have shaped who I am today.</p>
+      </div>
+    </section>
+
+    <section class="memory-section" id="memory-3">
+      <div class="text-block right">
+        <h2>Beautiful Memories</h2>
+        <p>I cherish every moment we spend together.</p>
+      </div>
+    </section>
+
+    <section class="footer">
+      <h2>I Love You! ❤️</h2>
+      <p>Happy Mother's Day</p>
+    </section>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

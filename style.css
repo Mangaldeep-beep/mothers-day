@@ -1,0 +1,165 @@
+:root {
+  --primary: #f8c8dc; /* Pastel pink */
+  --secondary: #ffb7b2;
+  --text-main: #fff;
+  --bg-color: #0f0a10; /* Elegant dark background */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none; /* Let clicks pass through if needed, but we might want interaction. We'll toggle this or handle raycasting. */
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 10%;
+}
+
+.hero {
+  align-items: center;
+  text-align: center;
+}
+
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  background: linear-gradient(45deg, var(--primary), var(--secondary), #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ccc;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0.7;
+  animation: bounce 2s infinite;
+}
+
+.scroll-indicator span {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.mouse {
+  width: 24px;
+  height: 36px;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  position: relative;
+}
+
+.mouse::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  animation: scrollDown 2s infinite;
+}
+
+.memory-section {
+  position: relative;
+}
+
+.text-block {
+  max-width: 400px;
+  background: rgba(15, 10, 16, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.text-block.left {
+  align-self: flex-start;
+}
+
+.text-block.right {
+  align-self: flex-end;
+}
+
+.text-block h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.text-block p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.footer {
+  align-items: center;
+  text-align: center;
+  min-height: 50vh;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+@keyframes scrollDown {
+  0% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, 15px); opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .text-block {
+    align-self: center !important;
+    text-align: center;
+  }
+}
