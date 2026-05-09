@@ -11,6 +11,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
+    <!-- canvas-confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <!-- Import maps polyfill -->
   <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
   
@@ -31,6 +34,15 @@
     <section class="hero">
       <h1 class="title">Happy Mother's Day</h1>
       <p class="subtitle">To the most amazing mom in the world</p>
+      
+      <!-- Audio Wish Player -->
+      <div class="audio-player">
+        <button id="play-wish-btn" class="feature-btn">
+          <span>🔊 Play My Wish</span>
+        </button>
+        <audio id="wish-audio" src="wish.wav"></audio>
+      </div>
+
       <div class="scroll-indicator">
         <span>Scroll to explore</span>
         <div class="mouse"></div>
@@ -44,6 +56,26 @@
       </div>
     </section>
 
+    <!-- Interactive Map Section -->
+    <section class="feature-section" id="memory-map">
+      <div class="text-block" style="margin: 0 auto; max-width: 800px; text-align: center;">
+        <h2>Our Journey Together 🗺️</h2>
+        <p>Click the glowing pins to reveal a special memory!</p>
+        <div class="map-container">
+          <img src="map.png" alt="Memory Map" class="vintage-map">
+          
+          <div class="map-pin" style="top: 30%; left: 40%;" data-title="Our First Big Trip" data-desc="Remember when we got lost but found that amazing little cafe?">📍</div>
+          <div class="map-pin" style="top: 60%; left: 70%;" data-title="Childhood Home" data-desc="The place where you taught me everything I know.">📍</div>
+
+          <div id="map-modal" class="hidden">
+            <h3 id="modal-title"></h3>
+            <p id="modal-desc"></p>
+            <button id="close-modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="memory-section" id="memory-2">
       <div class="text-block left">
         <h2>Endless Support</h2>
@@ -51,10 +83,68 @@
       </div>
     </section>
 
+    <!-- Coupon Book Section -->
+    <section class="feature-section" id="coupons">
+      <div class="text-block" style="margin: 0 auto; max-width: 800px; text-align: center;">
+        <h2>Mom's VIP Coupons 🎟️</h2>
+        <p>Click to redeem! No expiration date.</p>
+        <div class="coupon-grid">
+          <div class="coupon" data-type="hug">
+            <h3>One Big Bear Hug</h3>
+            <p>Redeemable immediately.</p>
+          </div>
+          <div class="coupon" data-type="dinner">
+            <h3>I'll Cook Dinner</h3>
+            <p>You relax, I got this.</p>
+          </div>
+          <div class="coupon" data-type="movie">
+            <h3>Movie Choice</h3>
+            <p>We watch whatever you want!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="memory-section" id="memory-3">
       <div class="text-block right">
         <h2>Beautiful Memories</h2>
         <p>I cherish every moment we spend together.</p>
+      </div>
+    </section>
+
+    <!-- Scratch Card & Bouquet Section -->
+    <section class="feature-section" id="scratch-and-bouquet">
+      <div class="text-block" style="margin: 0 auto; max-width: 800px; text-align: center;">
+        <h2>A Little Surprise For You 🎁</h2>
+        
+        <div class="scratch-container">
+          <h3>Scratch to reveal!</h3>
+          <div class="scratch-wrapper">
+            <div class="scratch-secret">
+              <h4>Surprise! 🎉</h4>
+              <p>I love you to the moon and back!</p>
+            </div>
+            <canvas id="scratch-canvas"></canvas>
+          </div>
+        </div>
+
+        <div class="bouquet-container">
+          <h3>Build Your Own Bouquet 💐</h3>
+          <p>Drag the flowers into the vase!</p>
+          
+          <div class="bouquet-workspace">
+            <div class="flower-palette">
+              <span class="draggable-flower">🌹</span>
+              <span class="draggable-flower">🌷</span>
+              <span class="draggable-flower">🌻</span>
+              <span class="draggable-flower">🌺</span>
+              <span class="draggable-flower">🌼</span>
+            </div>
+            <div class="vase-area" id="vase">
+              <div class="vase-base">🏺</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

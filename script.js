@@ -265,3 +265,179 @@ runawayBtn.addEventListener('click', () => {
   runawayBtn.style.display = 'none';
   runawayMessage.classList.remove('hidden');
 });
+
+// 3. Audio Player Logic
+const playWishBtn = document.getElementById('play-wish-btn');
+const wishAudio = document.getElementById('wish-audio');
+
+if (playWishBtn && wishAudio) {
+  playWishBtn.addEventListener('click', () => {
+    if (wishAudio.paused) {
+      wishAudio.play();
+      playWishBtn.innerHTML = '<span>⏸ Pause Wish</span>';
+    } else {
+      wishAudio.pause();
+      playWishBtn.innerHTML = '<span>🔊 Play My Wish</span>';
+    }
+  });
+  wishAudio.addEventListener('ended', () => {
+    playWishBtn.innerHTML = '<span>🔊 Play My Wish</span>';
+  });
+}
+
+// 4. Memory Map Logic
+const mapPins = document.querySelectorAll('.map-pin');
+const mapModal = document.getElementById('map-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalDesc = document.getElementById('modal-desc');
+const closeModal = document.getElementById('close-modal');
+
+mapPins.forEach(pin => {
+  pin.addEventListener('click', () => {
+    modalTitle.textContent = pin.getAttribute('data-title');
+    modalDesc.textContent = pin.getAttribute('data-desc');
+    mapModal.classList.remove('hidden');
+  });
+});
+
+if (closeModal) {
+  closeModal.addEventListener('click', () => {
+    mapModal.classList.add('hidden');
+  });
+}
+
+// 5. Coupon Logic (with Confetti)
+const coupons = document.querySelectorAll('.coupon');
+coupons.forEach(coupon => {
+  coupon.addEventListener('click', (e) => {
+    if (!coupon.classList.contains('redeemed')) {
+      coupon.classList.add('redeemed');
+      
+      // Trigger confetti at click coordinates
+      const rect = coupon.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+      
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { x, y },
+        colors: ['#f8c8dc', '#ffb7b2', '#ffffff']
+      });
+    }
+  });
+});
+
+// 6. Scratch Card Logic
+const canvas = document.getElementById('scratch-canvas');
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  let isDrawing = false;
+  
+  // Set canvas size correctly
+  canvas.width = 300;
+  canvas.height = 150;
+  
+  // Fill with a metallic cover
+  ctx.fillStyle = '#a0a0a0';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  // Add some text instruction on top of the cover
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '20px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('Scratch Here', canvas.width/2, canvas.height/2);
+
+  const getPos = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top
+    };
+  };
+
+  const scratch = (e) => {
+    if (!isDrawing) return;
+    e.preventDefault();
+    const pos = getPos(e);
+    
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 15, 0, Math.PI * 2);
+    ctx.fill();
+  };
+
+  canvas.addEventListener('mousedown', () => isDrawing = true);
+  canvas.addEventListener('mousemove', scratch);
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseleave', () => isDrawing = false);
+  
+  // Touch support
+  canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+  canvas.addEventListener('touchmove', scratch);
+  canvas.addEventListener('touchend', () => isDrawing = false);
+}
+
+// 7. Bouquet Builder (Drag and Drop)
+const flowers = document.querySelectorAll('.draggable-flower');
+const workspace = document.querySelector('.bouquet-workspace');
+
+let activeFlower = null;
+let startX, startY, initialLeft, initialTop;
+
+flowers.forEach(flower => {
+  flower.addEventListener('mousedown', dragStart);
+  flower.addEventListener('touchstart', dragStart, {passive: false});
+});
+
+function dragStart(e) {
+  activeFlower = e.target;
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  
+  startX = clientX;
+  startY = clientY;
+  
+  // If not absolute positioned yet
+  if (window.getComputedStyle(activeFlower).position !== 'absolute') {
+    const rect = activeFlower.getBoundingClientRect();
+    const workspaceRect = workspace.getBoundingClientRect();
+    
+    activeFlower.style.position = 'absolute';
+    activeFlower.style.left = (rect.left - workspaceRect.left) + 'px';
+    activeFlower.style.top = (rect.top - workspaceRect.top) + 'px';
+    workspace.appendChild(activeFlower); // Move to workspace relative context
+  }
+  
+  initialLeft = parseFloat(activeFlower.style.left || 0);
+  initialTop = parseFloat(activeFlower.style.top || 0);
+  
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('touchmove', drag, {passive: false});
+  document.addEventListener('mouseup', dragEnd);
+  document.addEventListener('touchend', dragEnd);
+}
+
+function drag(e) {
+  if (!activeFlower) return;
+  e.preventDefault();
+  
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  
+  const dx = clientX - startX;
+  const dy = clientY - startY;
+  
+  activeFlower.style.left = `${initialLeft + dx}px`;
+  activeFlower.style.top = `${initialTop + dy}px`;
+}
+
+function dragEnd() {
+  activeFlower = null;
+  document.removeEventListener('mousemove', drag);
+  document.removeEventListener('touchmove', drag);
+  document.removeEventListener('mouseup', dragEnd);
+  document.removeEventListener('touchend', dragEnd);
+}
