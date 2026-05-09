@@ -199,3 +199,69 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+// --- Mini Games Logic ---
+
+// 1. Bubble Pop Game
+const bubbleArea = document.getElementById('bubble-area');
+const bubbleMessage = document.getElementById('bubble-message');
+const totalBubbles = 6;
+let poppedCount = 0;
+
+const compliments = [
+  "You're the best cook! 🍳",
+  "Your smile lights up the room! ✨",
+  "You give the best hugs! 🤗",
+  "You're my personal superhero! 🦸‍♀️",
+  "You have a heart of gold! 💛",
+  "Thank you for everything! 🙏"
+];
+
+for (let i = 0; i < totalBubbles; i++) {
+  const bubble = document.createElement('div');
+  bubble.classList.add('bubble');
+  bubble.style.animationDelay = `${Math.random() * 2}s`;
+  
+  bubble.addEventListener('click', () => {
+    if (!bubble.classList.contains('popped')) {
+      bubble.classList.add('popped');
+      poppedCount++;
+      
+      // Show random compliment briefly
+      bubbleMessage.classList.remove('hidden');
+      bubbleMessage.textContent = compliments[i];
+      
+      if (poppedCount === totalBubbles) {
+        setTimeout(() => {
+          bubbleMessage.textContent = "You popped them all! You're amazing! 🎉";
+        }, 500);
+      }
+    }
+  });
+  
+  bubbleArea.appendChild(bubble);
+}
+
+// 2. Runaway Button Game
+const runawayBtn = document.getElementById('runaway-btn');
+const runawayMessage = document.getElementById('runaway-message');
+
+runawayBtn.addEventListener('mouseover', () => {
+  // Move to a random position within its parent container
+  const container = runawayBtn.parentElement;
+  const maxX = container.clientWidth - runawayBtn.clientWidth;
+  const maxY = container.clientHeight - runawayBtn.clientHeight;
+  
+  const randomX = Math.max(0, Math.floor(Math.random() * maxX));
+  const randomY = Math.max(0, Math.floor(Math.random() * maxY));
+  
+  runawayBtn.style.position = 'absolute';
+  runawayBtn.style.left = `${randomX}px`;
+  runawayBtn.style.top = `${randomY}px`;
+  runawayBtn.style.transform = 'none'; // remove the centering transform
+});
+
+runawayBtn.addEventListener('click', () => {
+  runawayBtn.style.display = 'none';
+  runawayMessage.classList.remove('hidden');
+});

@@ -157,6 +157,73 @@ h1, h2 {
   100% { transform: translate(-50%, 15px); opacity: 0; }
 }
 
+/* Games Section */
+.hidden {
+  display: none !important;
+}
+
+#bubble-area {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.bubble {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(248, 200, 220, 0.4));
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.4);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(248, 200, 220, 0.2), inset 0 -4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  animation: floatBubble 3s infinite ease-in-out alternate;
+}
+
+.bubble:hover {
+  transform: scale(1.1);
+}
+
+.bubble.popped {
+  animation: popBubble 0.3s forwards;
+  pointer-events: none;
+}
+
+@keyframes floatBubble {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-15px); }
+}
+
+@keyframes popBubble {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+#runaway-btn {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  border: none;
+  border-radius: 30px;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(248, 200, 220, 0.4);
+  transition: transform 0.1s, box-shadow 0.2s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+#runaway-btn:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
 @media (max-width: 768px) {
   .text-block {
     align-self: center !important;
